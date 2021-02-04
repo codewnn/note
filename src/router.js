@@ -20,7 +20,20 @@ const routes = [
     path: "*",
     component: () => import("@/module/index/index.vue"),
     props: { moduleRoutes: moduleRoutes }
-  }
+  },
+  {
+    path:'/blogcontentmanage',
+    component:()=>import("./components/blogcontentmanage/blogcontentmanage")
+  },
+  {
+    path:'/addblog',
+    component:()=>import("./components/addblog/addblog")
+  },
+  {
+    path:'/detail/:id',
+    component:()=>import("./components/detail/detail")
+  },
+
 ];
 routes.push(...moduleRoutes);
 

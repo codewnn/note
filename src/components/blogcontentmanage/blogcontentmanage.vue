@@ -11,12 +11,13 @@
               <img src="../../assets/img/img1.jpg">
             </div>
             <div v-for="(item,index) in filtersearch" :key="index" class="text item">
-              <router-link :to="'/detail/'+item.blog_id" tag="div">
-                <div>发布于：{{item.time}}</div>
-                <h2>{{item.subject}}</h2>
-                <article>{{item.content | sliceblog}}</article>
-              </router-link>
+              <!--<router-link :to="'/detail/'+item.id">-->
+              <div>发布于：{{item.time}}</div>
+              <h2>{{item.subject}}</h2>
+              <article>{{item.content | sliceblog}}</article>
+              <!--</router-link>-->
             </div>
+            <el-button type="primary" @click="addblog">添加博客</el-button>
           </el-card>
 
         </div>
@@ -26,55 +27,28 @@
       <el-footer>Footer</el-footer>
     </el-container>
     <!--右侧栏-->
-    <el-aside width="200px">
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>个人名片</span>
-        </div>
-        <div  class="text item" >
-          <el-card class="box-card">
-            <div  class="text item">
-              姓名：崔小红
-            </div>
-            <div  class="text item">
-              职业：软件工程
-            </div>
-            <div  class="text item">
-              电话：13390105194
-            </div>
-            <div  class="text item">
-              Email:2846703220@qq.com
-            </div>
-          </el-card>
-          <div class="demo-type">
-            <div>
-              <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-            </div>
-          </div>
-        </div>
-      </el-card>
-    </el-aside>
+    <el-aside width="200px">Aside</el-aside>
   </el-container>
-
 </template>
 
 <script>
-  // import {getblogdata} from '../../network/home.js'
   import {selectBlog} from "../../service/blog";
 
   export default {
-    name: "blogContent",
+    name: "blogcontentmanage",
     data(){
       return{
-        // showblog:[{title:'崔大傻子',content:'傻不傻哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',time:this.CurentTime()},
-        //   {title:'崔大傻子',content:'傻不傻哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',time:this.CurentTime()},
-        //   {title:'催大傻',content:'傻不傻哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈',time:this.CurentTime()}],
+        showblog:[],
         search:'',
-
-        showblog:[]
 
 
       }
+    },
+    created(){
+      selectBlog().then(res=>{
+        this.showblog=res
+      })
+
     },
     computed:{
       filtersearch(){
@@ -84,6 +58,9 @@
       }
     },
     methods:{
+      addblog(){
+        this.$router.push('/addblog')
+      },
       CurentTime(){
         var now = new Date();
         var year = now.getFullYear();       //年
@@ -115,13 +92,6 @@
         return value.slice(0,150)+'...'
       }
     },
-    created(){
-     selectBlog().then(res=>{
-       this.showblog=res
-       // console.log('成功');
-     })
-
-    }
   }
 </script>
 
@@ -133,10 +103,10 @@
     margin-left: 100px;
   }
   /*#show-blogs{*/
-    /*max-width: 100%;*/
-    /*margin: 0 auto;*/
-    /*text-align: center;*/
-    /*margin-top: 69px;*/
+  /*max-width: 100%;*/
+  /*margin: 0 auto;*/
+  /*text-align: center;*/
+  /*margin-top: 69px;*/
   /*}*/
   span{
     font-size: 28px;
@@ -145,11 +115,11 @@
     margin-left: 22px;
   }
   /*.single-blogs{*/
-    /*padding: 20px;*/
-    /*margin:20px auto;*/
-    /*box-sizing: border-box;*/
-    /*border: 1px solid #545c64;*/
-    /*max-width: 100%;*/
+  /*padding: 20px;*/
+  /*margin:20px auto;*/
+  /*box-sizing: border-box;*/
+  /*border: 1px solid #545c64;*/
+  /*max-width: 100%;*/
 
   /*}*/
 

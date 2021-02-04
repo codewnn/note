@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router.js'
 import VueParticles from 'vue-particles'
 Vue.config.productionTip = false
+import 'element-ui/lib/theme-chalk/index.css'
 
 
 Vue.use(VueParticles)

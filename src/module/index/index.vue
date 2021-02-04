@@ -1,13 +1,24 @@
 <template>
-    <div>
-        <div class="title">
-            <ul>
-                <li v-for="(item,index) in moduleRoutes" :key="index" @click="jump(item)">
-                    {{item.name}}
-                </li>
-            </ul>
-        </div>
-    </div>
+
+
+            <el-menu
+                    class="el-menu-demo"
+                    mode="horizontal"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b" router :default-active="path">
+                <el-menu-item v-for="(item,index1) in moduleRoutes" @click="jump(item.jumpToPath)" :key="index1"  :index="item.jumpToPath" >
+                    <i class="el-icon-s-home"></i>
+                    <span>{{item.name}}</span>
+                </el-menu-item>
+            </el-menu>
+
+
+            <!--<ul>-->
+                <!--<li v-for="(item,index) in moduleRoutes" :key="index" @click="jump(item)">-->
+                    <!--{{item.name}}-->
+                <!--</li>-->
+            <!--</ul>-->
 </template>
 
 <script>
@@ -17,7 +28,13 @@
             moduleRoutes:{
                 type:Array,
                 default:() =>{[]}
+            },
+          props: {
+            iscolor: {
+              type: String,
+              default: 'yellow'
             }
+          },
         },
         data(){
             return{
@@ -40,53 +57,46 @@
                     {
                         name:'测试'
                     }
-                ]
+                ],
+              path:''
             }
         },
+      computed:{
+      },
+      created(){
+        this.path=window.sessionStorage.getItem('item')
+      },
         methods:{
             jump(item){
-                this.$router.push({ path: item.jumpToPath })
+              window.sessionStorage.setItem('item',item)
+              this.path=item
             }
         }
     }
 </script>
 
-<style scoped lang="scss">
-    ul{
+<style scoped>
+    .el-menu-demo{
+        width: 100%;
         display: flex;
-        width: 60%;
-        li{
-            flex: 1;
-            text-align: center;
-            color : rgba(255,255,255,0.8);
-            transition: color 0.5s ease-out;
-            &:hover{
-                cursor: pointer;
-                color : rgba(255,255,255,1);
-                //animation: colors 0.5s alternate forwards ease-out;
-            }
-        }
-
+        justify-content: space-between;
+        /*height: 50px;*/
+        height: 63px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        font-size: 16px;
+    }
+    .el-menu-item{
+        /*height: 50px;*/
+        text-align: center;
+    }
+    /*span{*/
+        /*left: 8px;*/
+    /*}*/
+    .el-aside{
+        background-color: #ff5777;
     }
 
-.title{
-    width: 100%;
-    height: 50px;
-    background: rgb(0,0,0,0.8);
-    color: aliceblue;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    /*z-index: 99;*/
-}
-
-    @keyframes colors {
-        from{
-           color : rgba(255,255,255,0.8);
-        }
-        to{
-           color : rgba(255,255,255,1);
-        }
-    }
 </style>

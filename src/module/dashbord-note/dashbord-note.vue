@@ -9,6 +9,12 @@
                          @save = ademo(value)
             ></mavonEditor>
         </div>
+        <br>
+        <!--{{noteContent1}}-->
+        <div v-for="(item,index) in noteContent1" :key="index">
+            <div>{{item.test}}</div>
+            <div>{{item.tittle}}</div>
+        </div>
 
     </div>
 
@@ -18,18 +24,23 @@
     import { insertNote } from '../../service/note'
     import "mavon-editor/dist/css/index.css"
     import { mavonEditor } from 'mavon-editor'
+    import {getNoteContent} from "../../service/note";
+
     export default {
         name: "dashbord-index",
         components: {
             mavonEditor
         },
         created(){
-            // getdemo().then(
-            //     test =>{ this.test = test }
-            // )
+            getNoteContent().then(res=>{
+              // console.log(res);
+              this.noteContent1=res;
+            })
         },
         data(){
             return{
+                //笔记内容
+              noteContent1:'',
                 demo:'aaaa',
                 value:'',
                 color:'#ff5154',
@@ -68,7 +79,8 @@
                     /* 2.2.1 */
                     subfield: true, // 单双栏模式
                     preview: true, // 预览
-                }
+                },
+              noteContent:[]
             }
         },
         methods:{
@@ -85,10 +97,9 @@
                     }
                 )
             }
-        }
-        // mounted() {
-        //     this.test = getdemo()
-        // }
+
+        },
+
 
 
     }
